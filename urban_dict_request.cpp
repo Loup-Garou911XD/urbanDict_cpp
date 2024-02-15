@@ -6,24 +6,16 @@
 // Callback function to handle received data (suppressing output)
 size_t WriteCallback(void *contents, size_t size, size_t nmemb, void *userp) {
     // Simply return the size of the received data to suppress output
-    
     char *data = reinterpret_cast<char*>(contents); //casting to char because here we assume the data is text
     std::cout<<data;
     return size * nmemb;
 }
 
-int UrbanDictionaryRequest(const std::string &term) {
-    CURL* curl;
-    CURLcode result;
+std::string UrbanDictionaryRequest(const std::string &term) {
+    CURL* curl = curl_easy_init();
 
     const std::string url = "https://urban-dictionary7.p.rapidapi.com/v0/define?term=";
     std::string final_url = url + term;
-
-    curl = curl_easy_init();
-    if (curl == NULL) {
-        return -1;
-    }
-
     curl_easy_setopt(curl, CURLOPT_CUSTOMREQUEST, "GET");
     curl_easy_setopt(curl, CURLOPT_URL, final_url.c_str());
 
@@ -34,12 +26,16 @@ int UrbanDictionaryRequest(const std::string &term) {
 
     // Set a custom write callback to suppress output
     curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteCallback);
-
-    result = curl_easy_perform(curl);
+    std::string data;
+    curl_easy_setopt(curl, CURLOPT_WRITEDATA, &data);
+    CURLcode result = curl_easy_perform(curl);
     
     if (result != CURLE_OK) {
-        return -1;
+        std::cout << "naa\n";
+        return "NA";
     }
-
-    return 0;
+    std::cout << data;
+    curl_easy_cleanup(curl);
+    return "data"; //TODO: return formatted data or handle the returned unformatted data correctly
+    
 }

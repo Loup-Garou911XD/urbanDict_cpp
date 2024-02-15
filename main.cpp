@@ -8,7 +8,7 @@ using namespace std;
 class MyFrame : public wxFrame {
 public:
     MyFrame(const wxString &title)
-        : wxFrame(nullptr, wxID_ANY, title, wxDefaultPosition, wxSize(400, 400)), // Initialize the base class and set size
+        : wxFrame(nullptr, wxID_ANY, title, wxDefaultPosition, wxDefaultSize), // Initialize the base class and set size
           output_label(new wxStaticText(this, wxID_ANY, "Searching", wxPoint(10,100), wxDefaultSize)) { // Initialize output_label member variable
         
         // wxPanel* panel = new wxPanel(this, wxID_ANY);
@@ -21,9 +21,9 @@ public:
     }
     
     void OnButtonClick(wxCommandEvent& event) {
-        int result = UrbanDictionaryRequest("hello");
-        if (result == 0){
-            output_label->SetLabel(wxString::Format(wxT("%d"), result));
+        std::string result = UrbanDictionaryRequest("hello");
+        if (result != "NA"){
+            output_label->SetLabel(result);
         }
         else{
             output_label->SetLabel("Request failed");

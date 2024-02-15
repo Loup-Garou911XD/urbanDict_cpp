@@ -7,7 +7,7 @@ unit will not cause the contents of the header file to be processed again.*/
 #include <string>
 
 // Function prototype for performing the API request
-int UrbanDictionaryRequest(const std::string &term);
+std::string UrbanDictionaryRequest(const std::string &term);
 
 #endif
 
