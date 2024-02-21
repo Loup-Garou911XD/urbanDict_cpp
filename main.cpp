@@ -2,6 +2,7 @@
 #include <curl/curl.h>
 #include <iostream>
 #include "urban_dict_request.h"
+#include <json/json.h>
 
 using namespace std;
 
@@ -21,9 +22,26 @@ public:
     }
     
     void OnButtonClick(wxCommandEvent& event) {
-        std::string result = UrbanDictionaryRequest("hello");
+        string result = UrbanDictionaryRequest("hello");
         if (result != "NA"){
-            output_label->SetLabel(result);
+            Json::Value data;
+            Json::Reader reader;
+            wxString label;
+            bool parsing_successfull = reader.parse(result.c_str(), data);
+            if ( !parsing_successfull ){
+                cout  << "Failed to parse" << reader.getFormattedErrorMessages();    
+                // label = wxString::FromUTF8("Err converting to json");
+            }
+            else{
+                data = data.get("list","woompwoomp");
+                cout << data << endl << endl <<data.isArray();
+                if (data.isArray() && data.size() > 0) {
+                    cout << data[0]["definition"];
+                    label = wxString::FromUTF8(data.asString().c_str());
+                }
+                // label = wxString::FromUTF8(data.get("list", "woompwoomp").asString().c_str());
+            }
+            output_label->SetLabel(label);
         }
         else{
             output_label->SetLabel("Request failed");
