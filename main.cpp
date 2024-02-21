@@ -34,9 +34,9 @@ public:
             }
             else{
                 data = data.get("list","woompwoomp");
-                cout << data << endl << endl <<data.isArray();
-                if (data.isArray() && data.size() > 0) {
-                    cout << data[0]["definition"];
+                // cout << data << endl;
+                if (data.size() > 0) {
+                    data = data[0]["definition"];
                     label = wxString::FromUTF8(data.asString().c_str());
                 }
                 // label = wxString::FromUTF8(data.get("list", "woompwoomp").asString().c_str());
