@@ -15,21 +15,6 @@ jobs:
     - uses: actions/checkout@v3
     - name : install deps
       run: sudo apt-get install libcurl4-openssl-dev \
-       libwxbase3.1-0-unofficial \ 
-       libwxbase3.1-dev \ 
-       libwxgtk3.1-0-unofficial \ 
-       libwxgtk3.1-dev \ 
-       wx3.1-headers \ 
-       wx-common \ 
-       libwxgtk-webview3.1-0-unofficial \ 
-       libwxgtk-webview3.1-dev \ 
-       libwxgtk-media3.1-0-unofficial \ 
-       libwxgtk-media3.1-dev \ 
-       libwxbase3.1-0-unofficial-dbg \ 
-       libwxgtk3.1-0-unofficial-dbg \ 
-       libwxgtk-webview3.1-0-unofficial-dbg \ 
-       libwxgtk-media3.1-0-unofficial-dbg \ 
-       wx3.1-i18n \ 
-       wx3.1-examples
+            libwxgtk3.2-dev
     - name: make
       run: make
